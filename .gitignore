@@ -1,0 +1,16 @@
+# dependencies
+node_modules
+
+# IDE - webstorm
+.idea
+
+# IDE - vsCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# misc
+.DS_Store

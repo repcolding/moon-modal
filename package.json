@@ -1,0 +1,13 @@
+{
+  "name": "@verno.digital/moon-modal",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "esbuild ./src/index.js --outfile=dist/modal.js --bundle --format=esm"
+  },
+  "types": "./index.d.ts",
+  "dependencies": {
+    "esbuild": "^0.16.12"
+  }
+}
