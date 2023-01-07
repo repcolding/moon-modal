@@ -1,7 +1,7 @@
 interface options {
   modal: {
     active: string,
-    associated: object
+    associated?: object
   },
   overlay: {
     el: string | HTMLElement,
