@@ -62,11 +62,11 @@ class MoonModal {
   }
 
   addModifierOverlay (className) {
-    this.#options.overlay.classList.add(className)
+    this.#options.overlay.el.classList.add(className)
   }
 
   removeModifierOverlay (className) {
-    this.#options.overlay.classList.remove(className)
+    this.#options.overlay.el.classList.remove(className)
   }
 
   initOuterClose () {
