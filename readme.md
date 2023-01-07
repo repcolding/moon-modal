@@ -351,3 +351,7 @@ moonModal.destroy()
 ```ts
 moonModal.timeout = 400
 ```
+
+## License
+
+MIT
