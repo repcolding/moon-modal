@@ -1,13 +1,25 @@
 {
   "name": "@verno.digital/moon-modal",
+  "description": "Библиотека для реализации модальных окон",
   "version": "1.0.0",
   "main": "src/index.js",
   "license": "MIT",
   "scripts": {
     "build": "esbuild ./src/index.js --outfile=dist/modal.js --bundle --format=esm"
   },
+  "keywords": [
+    "js modal",
+    "modal step",
+    "@verno.digital - library"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/repcolding/moon-modal.git"
+  },
+  "author": "telegramm: @repcolding; site: https://verno.digital",
   "types": "./index.d.ts",
   "dependencies": {
     "esbuild": "^0.16.12"
-  }
+  },
+  "private": false
 }
