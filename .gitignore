@@ -1,6 +1,9 @@
 # dependencies
 node_modules
 
+# out
+dist
+
 # IDE - webstorm
 .idea
 

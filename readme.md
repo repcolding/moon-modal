@@ -1,8 +1,11 @@
 # MoonModal - Гибкая библиотека модального окна
 
-MoonModal - библиотека для работы с модальными окнами.
-Позваляет настраивать шаги из модальных окон
-и имеет гибкую настройку под каждый кейс
+MoonModal - реализует гибкую и удобную работу
+с модальными окнами. Все анимации построены на
+`css transition`. Реализует смену модальных окон
+по шагам. Можно легко вызывать модальные окна
+последовательно, не трогая `overlay` и `scrollbar` для
+плавной смены старых окон на новые
 
 ## Установка
 
@@ -16,7 +19,7 @@ yarn add @verno.digital/moon-modal
 
 ## Использование
 
-```js
+```ts
 import { MoonModal } from '@verno.digital/moon-modal'
 
 const moonModal = new MoonModal({
@@ -29,7 +32,7 @@ const moonModal = new MoonModal({
     }
   },
   overlay: {
-    selector: '[css-selector]',
+    selector: '[some-overlay-selector]' | HTMLElement,
     active: 'some-overlay-class--active'
   },
   timeout: 200
@@ -47,6 +50,60 @@ moonModal.addModifierOverlay('some-class')
 moonModal.removeModifierOverlay('some-class')
 
 moonModal.destroy()
+```
+
+## Возможное html представление
+
+Библиотека не связывается жестко с модальными оконами
+по их css селекторами. Вы можете иметь верстку основых
+модальных окон, и уникальных, если для улучшения
+качества кода, вы разбили некторые модальные окна
+на новые `BEM` сущности
+
+Еще это полезно, когда идет обновление старого проекта,
+и необходимо реализовать связанную работу 
+старых и новых модальных окон
+
+```html
+<div class="overlay"></div>
+
+<div class="modal-wrapper" id="feedback">
+  <div class="modal-content"><!-- content --></div>
+</div>
+
+<div class="modal-wrapper" id="ajax-info">
+  <div class="modal-content"><!-- content --></div>
+</div>
+
+<div class="my-modal-old" id="calc">
+  <div class="my-modal__body"><!-- content --></div>
+</div>
+
+<div class="my-modal-custom" id="card">
+  <div class="modal-new-content"><!-- content --></div>
+</div>
+```
+
+```js
+import { MoonModal } from '@verno.digital/moon-modal'
+
+const moonModal = new MoonModal({
+  modal: {
+    active: 'modal-wrapper--open',
+    associated: {
+      'my-modal-old': 'my-modal-old--active',
+      'my-modal-custom': 'my-modal-custom--active'
+    }
+  },
+  overlay: {
+    selector: '.overlay',
+    active: 'overlay--active'
+  },
+  timeout: 200
+})
+
+// Все методы описаны ниже
+moonModal.open('#feedback')
 ```
 
 ## Конфигурация
