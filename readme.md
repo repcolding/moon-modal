@@ -232,10 +232,10 @@ moonModal.open('#feedback')
 <div class="modal modal--open" id="feedback" />
 ```
 
-### `overlay.selector`
+### `overlay.el`
 
 ```ts
-overlay: {
+interface overlay {
   el: string | HTMLElement
 }
 ```
@@ -245,7 +245,7 @@ overlay: {
 ### `overlay.active`
 
 ```ts
-overlay: {
+interface overlay {
   active: string
 }
 ```
@@ -265,12 +265,17 @@ const moonModal = new MoonModal({/* options */})
 
 ### `moonModal.info`
 
-Свойство с информацией об открытом модальном
+Геттер с информацией об открытом модальном
 окне, и о предыдущем
 
 ```ts
-moonModal.info.prev = HTMLElement | undefined
-moonModal.info.active = HTMLElement
+interface info {
+  active: HTMLElement,
+  prev: HTMLElement | undefined,
+  timeout: number
+}
+
+const info: info = moonModal.info
 ```
 
 ### `moonModal.open(string | HTMLElement)`
@@ -286,11 +291,15 @@ const modalElement = document.querySelector('#feedback')
 
 moonModal.open('#feedback') // Первый вариант
 moonModal.open(modalElement) // Второй вариант
+```
 
-const info = moonModal.open('#feedback')
+```ts
+interface info {
+  current: HTMLElement,
+  prev: HTMLElement | undefined
+}
 
-info.prev = HTMLElement | undefined
-info.active = HTMLElement
+const info: info = moonModal.open('#feedback')
 ```
 
 ### `moonModal.close()`
@@ -301,10 +310,15 @@ info.active = HTMLElement
 окне, и о предыдущем
 
 ```ts
-const info = moonModal.close()
+moonModal.close()
+```
 
-info.prev = HTMLElement | undefined
-info.active = HTMLElement
+```ts
+interface info {
+  current: HTMLElement
+}
+
+const info: info = moonModal.close()
 ```
 
 ### `moonModal.addModifierOverlay(string)`

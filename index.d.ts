@@ -11,11 +11,6 @@ interface options {
 }
 
 declare class MoonModal {
-  info: {
-    current: HTMLElement,
-    prev: undefined | HTMLElement
-  }
-
   constructor (options: options)
 
   open (el: string | HTMLElement): {
@@ -36,6 +31,12 @@ declare class MoonModal {
   destroy ()
 
   set timeout (value: number)
+
+  get info (): {
+    active: HTMLElement,
+    prev: undefined | HTMLElement,
+    timeout: number
+  }
 }
 
 export {

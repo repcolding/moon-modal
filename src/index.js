@@ -1,5 +1,4 @@
 import { hideScrollbar, showScrollBar } from './utils/scroll-bar-toggle'
-import { config } from './options/config'
 import { addClass, removeClass } from './helpers/class-list'
 import { dispatchEventClose, dispatchEventOpen } from './utils/dispatch'
 import { getActiveClass } from './helpers/get-active-class'
@@ -9,35 +8,34 @@ import { containsAssociated } from './helpers/contains-associated'
 import { containsActive } from './helpers/contains-active'
 
 class MoonModal {
-  info
   #options
   #state
 
-  constructor(props) {
-    const { error, message } = validateOptions(props)
+  #onClose = ({ target }) => {
+    if (containsActive(target, this.#options.modal.active)) this.close()
+    if (containsAssociated(target, this.#options.modal.associated)) this.close()
+  }
+
+  constructor(options) {
+    const { error, message } = validateOptions(options)
 
     if (error) {
       return message()
     }
 
-    this.#options = { ...config, ...props }
+    this.#options = options
     this.#state = {
-      overlay: getEl(props.overlay.el),
-      activeModal: undefined,
-      prevModal: undefined,
+      overlay: getEl(options.overlay.el),
+      active: undefined,
+      prev: undefined,
       isAnimation: false
-    }
-
-    this.info = {
-      current: undefined,
-      prev: undefined
     }
   }
 
   open (el) {
     if (this.#state.isAnimation) return console.warn('Не прошло закрытие предыдущего модального окна!')
 
-    this.#state.activeModal
+    this.#state.active
       ? this.#hotClose()
       : this.#coldOpen()
 
@@ -45,19 +43,19 @@ class MoonModal {
     this.#stateOpen(getEl(el))
 
     return {
-      prev: this.#state.prevModal,
-      current: this.#state.activeModal
+      current: this.#state.active,
+      prev: this.#state.prev
     }
   }
 
   close () {
-    if (!this.#state.activeModal) return console.warn('Нет активного модального окна')
+    if (!this.#state.active) return console.warn('Нет активного модального окна')
 
     this.#animationClose()
     this.#stateClose()
 
     return {
-      current: this.#state.prevModal
+      current: this.#state.prev
     }
   }
 
@@ -81,9 +79,12 @@ class MoonModal {
     this.#options.timeout = value
   }
 
-  #onClose ({ target }) {
-    if (containsActive(target, this.#options.modal.active)) this.close()
-    if (containsAssociated(target, this.#options.modal.associated)) this.close()
+  get info () {
+    return {
+      active: this.#state.active,
+      prev: this.#state.prev,
+      timeout: this.#options.timeout
+    }
   }
 
   #getActiveClass (modal) {
@@ -101,7 +102,7 @@ class MoonModal {
   }
 
   #hotClose () {
-    const modal = this.#state.activeModal
+    const modal = this.#state.active
     removeClass(modal, this.#getActiveClass(modal))
 
     this.#timeout(() => {
@@ -110,7 +111,7 @@ class MoonModal {
   }
 
   #animationClose () {
-    const modal = this.#state.activeModal
+    const modal = this.#state.active
     this.#setIsAnimation(true)
 
     removeClass(modal, this.#getActiveClass(modal))
@@ -138,19 +139,13 @@ class MoonModal {
   }
 
   #stateClose () {
-    this.#state.prevModal = this.#state.activeModal
-    this.#state.activeModal = undefined
-
-    this.info.current = this.#state.activeModal
-    this.info.prev = this.#state.prevModal
+    this.#state.prev = this.#state.active
+    this.#state.active = undefined
   }
 
   #stateOpen (modal) {
-    this.#state.prevModal = this.#state.activeModal
-    this.#state.activeModal = modal
-
-    this.info.current = this.#state.activeModal
-    this.info.prev = this.#state.prevModal
+    this.#state.prev = this.#state.active
+    this.#state.active = modal
   }
 }
 
