@@ -1,7 +1,7 @@
 {
   "name": "@verno.digital/moon-modal",
   "description": "Плагин для реализации модальных окон",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "main": "src/index.js",
   "license": "MIT",
   "scripts": {
