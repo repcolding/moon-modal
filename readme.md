@@ -32,7 +32,7 @@ const moonModal = new MoonModal({
     }
   },
   overlay: {
-    selector: '[some-overlay-selector]' | HTMLElement,
+    el: '[some-overlay-selector]' | HTMLElement,
     active: 'some-overlay-class--active'
   },
   timeout: 200
@@ -96,7 +96,7 @@ const moonModal = new MoonModal({
     }
   },
   overlay: {
-    selector: '.overlay',
+    el: '.overlay',
     active: 'overlay--active'
   },
   timeout: 200
