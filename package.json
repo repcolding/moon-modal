@@ -1,6 +1,6 @@
 {
   "name": "@verno.digital/moon-modal",
-  "description": "Библиотека для реализации модальных окон",
+  "description": "Плагин для реализации модальных окон",
   "version": "1.0.0",
   "main": "src/index.js",
   "license": "MIT",
@@ -10,7 +10,7 @@
   "keywords": [
     "js modal",
     "modal step",
-    "@verno.digital - library"
+    "@verno.digital - plugin"
   ],
   "repository": {
     "type": "git",

@@ -113,7 +113,7 @@ moonModal.open('#feedback')
 ### `modal.active`
 
 ```ts
-modal: {
+interface modal {
   active: string
 }
 ```
@@ -365,6 +365,8 @@ moonModal.destroy()
 ```ts
 moonModal.timeout = 400
 ```
+
+
 
 ## License
 
