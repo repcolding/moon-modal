@@ -1,3 +1,18 @@
+interface dispatch {
+  open?: {
+    start?: string,
+    transitionEnd?: string
+  },
+  close?: {
+    start?: string,
+    transitionEnd?: string
+  }
+}
+
+interface cssVars {
+  sizeScrollBar?: string
+}
+
 interface options {
   modal: {
     active: string,
@@ -7,18 +22,20 @@ interface options {
     el: string | HTMLElement,
     active: string
   },
-  timeout: number
+  timeout: number,
+  dispatch?: dispatch,
+  cssVars?: cssVars
 }
 
 declare class MoonModal {
   constructor (options: options)
 
-  open (el: string | HTMLElement): {
+  open (el: string | HTMLElement, timeout: number, hidingScrollbar: boolean): {
     prev: undefined | HTMLElement,
     current: HTMLElement
   }
 
-  close (): {
+  close (timeout?: number): {
     current: HTMLElement
   }
 
@@ -26,13 +43,10 @@ declare class MoonModal {
 
   removeModifierOverlay (className: string)
 
-  initOuterClose ()
-
-  destroy ()
-
   set timeout (value: number)
 
   get info (): {
+    overlay: HTMLElement,
     active: HTMLElement,
     prev: undefined | HTMLElement,
     timeout: number
