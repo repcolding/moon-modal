@@ -7,9 +7,8 @@
     "build": "esbuild ./src/index.js --outfile=dist/modal.js --bundle --format=esm"
   },
   "keywords": [
-    "js modal",
-    "modal step",
-    "@verno.digital - plugin"
+    "@verno/module",
+    "@verno.digital"
   ],
   "repository": {
     "type": "git",
