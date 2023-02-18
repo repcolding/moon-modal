@@ -97,6 +97,7 @@ class MoonModal {
   #hotClose () {
     const modal = this.#state.active
     removeClass(modal, this.#getActiveClass(modal))
+    dispatchEvent(this.#options.dispatch.close.start, modal)
 
     this.#timeout(() => {
       dispatchEvent(this.#options.dispatch.close.transitionEnd, modal)
