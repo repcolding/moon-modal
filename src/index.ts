@@ -2,22 +2,25 @@ import { hideScrollbar, showScrollBar } from './utils/scroll-bar-toggle'
 import { addClass, removeClass } from './helpers/class-list'
 import { dispatchEvent } from './utils/dispatch'
 import { getActiveClass } from './helpers/get-active-class'
-import { validateOptions } from './utils/validate-options'
 import { getEl } from './helpers/get-el'
-import { getOptions } from './options/default'
+import { fillOptions } from './options/default'
+import {
+  Close,
+  Info,
+  methodOptions,
+  modalOptions,
+  modalType,
+  Open,
+  stateType
+} from './types/types'
 
 class MoonModal {
-  #options
-  #state
+  #options: modalOptions
+  #state: stateType
 
-  constructor(options) {
-    const { error, message } = validateOptions(options)
+  constructor(options: modalOptions) {
+    this.#options = fillOptions(options)
 
-    if (error) {
-      return message()
-    }
-
-    this.#options = getOptions(options)
     this.#state = {
       overlay: getEl(options.overlay.el),
       active: undefined,
@@ -26,16 +29,18 @@ class MoonModal {
     }
   }
 
-  open (el, timeout, hidingScrollbar = true) {
-    if (this.#state.isAnimation) return console.warn('Не прошло закрытие предыдущего модального окна!')
+  open(el: modalType, options: methodOptions): Open {
+    const { hidingScrollbar = true } = options
+
+    if (this.#state.isAnimation) {
+      throw Error('Не прошло закрытие предыдущего модального окна!')
+    }
 
     const domModal = getEl(el)
 
-    this.#state.active
-      ? this.#hotClose()
-      : this.#coldOpen(hidingScrollbar)
+    this.#state.active ? this.#hotClose() : this.#coldOpen(hidingScrollbar)
 
-    this.#animationOpen(timeout, domModal)
+    this.#animationOpen(domModal)
     this.#stateOpen(domModal)
 
     dispatchEvent(this.#options.dispatch.open.start, domModal)
@@ -46,10 +51,12 @@ class MoonModal {
     }
   }
 
-  close (timeout) {
-    if (!this.#state.active) return console.warn('Нет активного модального окна')
+  close(): Close {
+    if (!this.#state.active) {
+      throw Error('Нет активного модального окна')
+    }
 
-    this.#animationClose(timeout)
+    this.#animationClose()
     this.#stateClose()
 
     dispatchEvent(this.#options.dispatch.close.start, this.#state.prev)
@@ -59,19 +66,11 @@ class MoonModal {
     }
   }
 
-  addModOverlay (className) {
-    this.#state.overlay.classList.add(className)
-  }
-
-  removeModOverlay (className) {
-    this.#state.overlay.classList.remove(className)
-  }
-
-  set timeout (value) {
+  set timeout(value: number) {
     this.#options.timeout = value
   }
 
-  get info () {
+  get info(): Info {
     return {
       overlay: this.#state.overlay,
       active: this.#state.active,
@@ -80,22 +79,25 @@ class MoonModal {
     }
   }
 
-  #getActiveClass (modal) {
-    return getActiveClass(modal, this.#options.modal.associated) ?? this.#options.modal.active
+  #getActiveClass(modal: HTMLElement) {
+    const activeClass = getActiveClass(modal, this.#options.modal.associated)
+
+    return activeClass ?? this.#options.modal.active
   }
 
-  #animationOpen (timeout, modal) {
+  #animationOpen(modal: HTMLElement) {
     this.#setIsAnimation(true)
     addClass(modal, this.#getActiveClass(modal))
 
-    this.#timeout(timeout, () => {
+    this.#timeout(() => {
       dispatchEvent(this.#options.dispatch.open.transitionEnd, modal)
       this.#setIsAnimation(false)
     })
   }
 
-  #hotClose () {
+  #hotClose() {
     const modal = this.#state.active
+
     removeClass(modal, this.#getActiveClass(modal))
     dispatchEvent(this.#options.dispatch.close.start, modal)
 
@@ -104,14 +106,14 @@ class MoonModal {
     })
   }
 
-  #animationClose (timeout) {
+  #animationClose() {
     const modal = this.#state.active
     this.#setIsAnimation(true)
 
     removeClass(modal, this.#getActiveClass(modal))
     removeClass(this.#state.overlay, this.#options.overlay.active)
 
-    this.#timeout(timeout, () => {
+    this.#timeout(() => {
       showScrollBar(this.#options.cssVars.sizeScrollBar)
       dispatchEvent(this.#options.dispatch.close.transitionEnd, modal)
 
@@ -119,15 +121,15 @@ class MoonModal {
     })
   }
 
-  #timeout (timeout, cb) {
-    setTimeout(cb, timeout ?? this.#options.timeout)
+  #timeout(cb: () => any) {
+    setTimeout(cb, this.#options.timeout)
   }
 
-  #setIsAnimation (value) {
+  #setIsAnimation(value: boolean) {
     this.#state.isAnimation = value
   }
 
-  #coldOpen (hidingScrollbar) {
+  #coldOpen(hidingScrollbar: boolean) {
     addClass(this.#state.overlay, this.#options.overlay.active)
 
     if (hidingScrollbar) {
@@ -135,17 +137,15 @@ class MoonModal {
     }
   }
 
-  #stateClose () {
+  #stateClose() {
     this.#state.prev = this.#state.active
     this.#state.active = undefined
   }
 
-  #stateOpen (modal) {
+  #stateOpen(modal: HTMLElement) {
     this.#state.prev = this.#state.active
     this.#state.active = modal
   }
 }
 
-export {
-  MoonModal
-}
+export { MoonModal }

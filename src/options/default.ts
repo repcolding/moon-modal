@@ -1,3 +1,5 @@
+import { modalOptions } from '../types/types'
+
 const defaultOptions = {
   dispatch: {
     open: {
@@ -11,16 +13,15 @@ const defaultOptions = {
   },
   cssVars: {
     sizeScrollBar: '--mm-scrollbar'
-  }
-}
+  },
+  timeout: 200
+} as modalOptions
 
-const getOptions = (options) => {
+const fillOptions = (options) => {
   return {
     ...defaultOptions,
     ...options
   }
 }
 
-export {
-  getOptions
-}
+export { fillOptions }

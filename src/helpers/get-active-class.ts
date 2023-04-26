@@ -1,4 +1,7 @@
-const getActiveClass = (modal, associated) => {
+const getActiveClass = (
+  modal: HTMLElement,
+  associated: Object
+): string | undefined => {
   for (const key in associated) {
     if (modal.classList.contains(key)) return associated[key]
   }
@@ -6,6 +9,4 @@ const getActiveClass = (modal, associated) => {
   return undefined
 }
 
-export {
-  getActiveClass
-}
+export { getActiveClass }

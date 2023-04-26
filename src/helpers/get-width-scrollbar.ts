@@ -1,4 +1,4 @@
-const getWidthScrollBar = () => {
+const getWidthScrollBar = (): number => {
   const div = document.createElement('div')
 
   div.style.overflow = 'scroll'
@@ -15,6 +15,4 @@ const getWidthScrollBar = () => {
   return scrollWidth
 }
 
-export {
-  getWidthScrollBar
-}
+export { getWidthScrollBar }
