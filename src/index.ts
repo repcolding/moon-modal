@@ -29,7 +29,7 @@ class MoonModal {
     }
   }
 
-  open(el: modalType, options: methodOptions): Open {
+  open(el: modalType, options?: methodOptions): Open {
     const { hidingScrollbar = true } = options
 
     if (this.#state.isAnimation) {
