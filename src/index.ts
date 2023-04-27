@@ -32,6 +32,10 @@ class MoonModal {
   open(el: modalType, options?: methodOptions): Open {
     const { hidingScrollbar = true } = options ?? {}
 
+    if (this.#state.isAnimation) {
+      // throw Error('Не прошло закрытие предыдущего модального окна!')
+    }
+
     const domModal = getEl(el)
 
     this.#state.active ? this.#hotClose() : this.#coldOpen(hidingScrollbar)
@@ -49,7 +53,7 @@ class MoonModal {
 
   close(): Close {
     if (!this.#state.active) {
-      throw Error('Нет активного модального окна')
+      return
     }
 
     this.#animationClose()
