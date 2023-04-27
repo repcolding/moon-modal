@@ -30,7 +30,7 @@ class MoonModal {
   }
 
   open(el: modalType, options?: methodOptions): Open {
-    const { hidingScrollbar = true } = options
+    const { hidingScrollbar = true } = options ?? {}
 
     if (this.#state.isAnimation) {
       throw Error('Не прошло закрытие предыдущего модального окна!')
