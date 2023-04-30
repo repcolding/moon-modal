@@ -1,6 +1,6 @@
 {
   "name": "@verno.digital/moon-modal",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
@@ -8,7 +8,6 @@
     "postbuild": "tsc --project tsconfig.build.json"
   },
   "keywords": [
-    "@verno/module",
     "@verno.digital"
   ],
   "repository": {

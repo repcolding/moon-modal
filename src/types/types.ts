@@ -1,3 +1,20 @@
+/**
+ * default options {
+ *  dispatch: {
+ *     open: {
+ *       start: 'mm:open',
+ *       transitionEnd: 'mm:open:end'
+ *     },
+ *     close: {
+ *       start: 'mm:close',
+ *       transitionEnd: 'mm:close:end'
+ *     }
+ *   },
+ *   cssVars: {
+ *     sizeScrollBar: '--mm-scrollbar'
+ *   }
+ * }
+ * */
 export interface modalOptions {
   modal: {
     active: string
