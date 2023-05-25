@@ -1,12 +1,6 @@
 {
   "name": "@verno.digital/moon-modal",
-  "version": "2.0.8",
-  "main": "dist/index.js",
-  "license": "MIT",
-  "scripts": {
-    "build": "esbuild src/index.ts --outfile=dist/index.js --bundle --format=esm",
-    "postbuild": "tsc --project tsconfig.build.json"
-  },
+  "version": "2.0.9",
   "keywords": [
     "@verno.digital"
   ],
@@ -14,15 +8,26 @@
     "type": "git",
     "url": "git+https://github.com/repcolding/moon-modal.git"
   },
+  "license": "MIT",
   "author": "telegramm: @repcolding; site: https://verno.digital",
-  "types": "dist/index.d.ts",
-  "dependencies": {
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
   },
-  "private": false,
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "esbuild src/index.ts --outfile=dist/index.mjs --bundle --format=esm",
+    "postbuild": "tsc --project tsconfig.build.json"
+  },
+  "dependencies": {},
   "devDependencies": {
     "esbuild": "^0.16.12",
+    "prettier": "^2.8.8",
     "tsc": "^2.0.4",
-    "typescript": "^5.0.4",
-    "prettier": "^2.8.8"
+    "typescript": "^5.0.4"
   }
 }
