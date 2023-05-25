@@ -1,6 +1,6 @@
 {
   "name": "@verno.digital/moon-modal",
-  "version": "2.0.9",
+  "version": "2.1.0",
   "keywords": [
     "@verno.digital"
   ],
@@ -19,6 +19,9 @@
   },
   "main": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "esbuild src/index.ts --outfile=dist/index.mjs --bundle --format=esm",
     "postbuild": "tsc --project tsconfig.build.json"
